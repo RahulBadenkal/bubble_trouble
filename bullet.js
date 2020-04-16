@@ -10,7 +10,6 @@ class Bullet {
     }
 
     draw() {
-        debugger
         if (this.final.y <= 0) {  // Bullet once reached top of screen gets destroyed
             this.active = false
             return

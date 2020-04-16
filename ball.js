@@ -21,7 +21,7 @@ class Ball {
             this.#d = this.#d * -1
         }
         this.#x = this.#x + 4 * this.#d
-
+        
         if (this.#y >= (height - this.#radius) || this.#y <= this.#radius || this.#velocity <= 0) {
             this.#u = this.#u * -1
         }

@@ -1,8 +1,8 @@
 class Player {
     x = width / 2
     y = height - 20
-    #w = 40
-    #h = 40
+    w = 40
+    h = 40
     blist = []  // Array of Bullets. Should Ideally be a Linked List not Array
 
     constructor(playerImg){
@@ -11,7 +11,7 @@ class Player {
 
     draw() {
         // rect(this.x, this.y, this.#w, this.#h)
-        image(this.playerImg, this.x - this.#w/2, this.y - this.#h/2, this.#w, this.#h)
+        image(this.playerImg, this.x - this.w/2, this.y - this.h/2, this.w, this.h)
         
         let newBlist = []
         for (let i=0; i<this.blist.length; i++) {

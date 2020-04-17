@@ -1,15 +1,3 @@
-/*
-- All balls have same horiontal velocity
-- DOUBT: All balls have same vertical velocity?
-- Also bounce height is a property of the ball along with x, y, and radius. A ball will always try to bounce this high
-- No Gravity, Balls automatically switch vertical direction on hitting the floor or reaching their max height
-  Also switch horizontal direction when hitting the walls
-- Constructor will take x, y, radius, bounceHeight, d1, d2 (d1, d2 are either +1, -1 depending on whetehr the ball is  
-  moving left/right up/down initially) 
-- A set of suitable value for radius, bouceHeight will be decided by us by trial and error. All balls initantiated will 
-  be one among this set.
-
-*/
 class Ball {
     // Private fields
     #x
@@ -19,7 +7,7 @@ class Ball {
     #bounceHeight
     #frameCount = 0  // For Testing
     MAX_RADIUS = Math.min(width/2, height/2)
-
+    
     constructor(x, y, radius, initialVelocity, bounceHeight) {
         // Setting the position of the balls
         if (radius > this.MAX_RADIUS){
@@ -69,14 +57,14 @@ class Ball {
         }
 
         if(this.isCollidedFloor()){
-            console.log('Floor')
+            // console.log('Floor')
             this.#y = height - this.#radius
             this.#velocity.y = -1 * this.getBounceHeightSpeed(this.#bounceHeight)
         }
         else if(this.#y < this.isCollidedRoof()){
             // console.log('Roof')
             this.#y = this.#radius
-            this.#velocity.y = Math.abs(this.#velocity.y) 
+            this.#velocity.y = Math.abs(this.#velocity.y)
         }
     }
 
@@ -84,10 +72,10 @@ class Ball {
         
         this.#frameCount = this.#frameCount + 1 
 
-        this.#x = this.#x + this.#velocity.x * SEC_PER_FRAME
-        this.#y = this.#y + this.#velocity.y * SEC_PER_FRAME  // Not exact, because of this the actual bounceHeight may not be the exact same as the supplied bounceHeight
+        this.#x = this.#x + this.#velocity.x * UNIT_TIME
+        this.#y = this.#y + this.#velocity.y * UNIT_TIME  // Not exact, because of this the actual bounceHeight is not the exact same as the supplied bounceHeight
         
-        this.#velocity.y = this.#velocity.y + GRAVITY_CONSTANT * SEC_PER_FRAME
+        this.#velocity.y = this.#velocity.y + GRAVITY_CONSTANT * UNIT_TIME
 
         this.onCollision()
 

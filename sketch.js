@@ -3,7 +3,7 @@
 // Constants
 // Per second is equivalent to per 
 const FRAMES_PER_SEC = 30
-const SEC_PER_FRAME = 0.5
+const UNIT_TIME = 0.5
 const SPACE = 32
 const GRAVITY_CONSTANT = 3
 
@@ -15,7 +15,7 @@ function setup() {
   createCanvas(1000, 400)  // createCanvas must be the first statement
   stroke(255)    // Set line drawing color to white
   frameRate(FRAMES_PER_SEC)
-  b = new Ball(120, 120, 10, createVector(10, -30), 300)
+  b = new Ball(120, 120, 40, createVector(-10, -30), 300)
   let playerImg = loadImage('assets/ghostmask2.png');
   p = new Player(playerImg)
 }

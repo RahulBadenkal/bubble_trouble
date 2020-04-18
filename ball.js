@@ -5,10 +5,10 @@ class Ball {
     radius
     #velocity
     #bounceHeight
-    #frameCount = 0  // For Testing
+    ballColor
     MAX_RADIUS = Math.min(width/2, height/2)
 
-    constructor(x, y, radius, initialVelocity, bounceHeight) {
+    constructor(x, y, radius, initialVelocity, bounceHeight, ballColor) {
         // Setting the position of the balls
         if (radius > this.MAX_RADIUS){
             throw "Ball with radius '" + radius + "' exceeds MAX RADIUS '" + this.MAX_RADIUS + "'."
@@ -20,6 +20,7 @@ class Ball {
         this.radius = radius
         this.#velocity = initialVelocity
         this.#bounceHeight = bounceHeight
+        this.ballColor = ballColor
     }
 
     getBounceHeightSpeed(bounceHeight){
@@ -68,10 +69,12 @@ class Ball {
         }
     }
 
+    onDestroy(){
+        bubbleBurstSound.play()
+    }
+
     draw() {
         
-        this.#frameCount = this.#frameCount + 1 
-
         this.x = this.x + this.#velocity.x * UNIT_TIME
         this.y = this.y + this.#velocity.y * UNIT_TIME  // Not exact, because of this the actual bounceHeight is not the exact same as the supplied bounceHeight
         
@@ -79,7 +82,7 @@ class Ball {
 
         this.onCollision()
 
-        // console.log('count', this.#frameCount)
+        // console.log('count', frameCount)
         // console.log('x', this.x)
         // console.log('vx', this.#velocity.x)
         // console.log('width', width)
@@ -87,7 +90,9 @@ class Ball {
         // console.log('vy', this.#velocity.y)
         // console.log('height', height)
         // console.log('Bounce Height speed', this.#bounceHeight)
-
+        
+        strokeWeight(1);
+        fill(color(this.ballColor[0], this.ballColor[1], this.ballColor[2]))
         circle(this.x, this.y, 2 * this.radius)
     }
 

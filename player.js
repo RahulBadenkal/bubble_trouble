@@ -4,9 +4,17 @@ class Player {
     w = 40
     h = 40
     blist = []  // Array of Bullets. Should Ideally be a Linked List not Array
-
+    #stepDistance = 5
     constructor(playerImg){
         this.playerImg = playerImg
+    }
+
+    moveForward(){
+        this.x += this.#stepDistance
+    }
+
+    moveBackward(){
+        this.x -= this.#stepDistance
     }
 
     draw() {

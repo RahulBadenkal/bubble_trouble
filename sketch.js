@@ -86,9 +86,12 @@ function draw() {
     player.shootBullet(player.x, player.y);
   }
 
+  HandleWallPlayerCollisions()
+
   HandleBulletBallCollisions()
 
   HandleBallsPlayerCollsions()
+
 
   // Destroy the ball if it hits the roof
   for (let i=balls.length - 1; i>=0; i--){
@@ -100,6 +103,21 @@ function draw() {
   }
 
 }
+
+
+function HandleWallPlayerCollisions(){
+    // Left wall collision
+    if ( (player.x - player.w/2) <= 0){
+    console.log('Collided left')
+        player.x = player.w/2
+    }
+    // Right Wall Collision
+    else if((player.x + player.w/2) >= width){
+        console.log('Collided Right')
+        player.x = width - (player.w)/2
+    }
+}
+
 
 function HandleBulletBallCollisions()
 {  

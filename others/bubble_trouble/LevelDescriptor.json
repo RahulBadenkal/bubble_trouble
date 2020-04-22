@@ -1,0 +1,39 @@
+{
+  "1": {
+    "Ball": {
+      "Radius": "10",
+      "X-Vel": "10",
+      "Y_Vel": "30",
+      "Bounce": "100"
+    },
+    "Player": {
+      "Attriubute": "value"
+    },
+    "Bullet": {
+      "Attriubute": "value"
+    },
+    "Methods": [
+      "HandleCollisions",
+      "DrawUIElements"
+    ]
+  },
+  "2": {
+    "Ball": {
+      "Radius": "10",
+      "X-Vel": "10",
+      "Y_Vel": "30",
+      "Bounce": "100"
+    },
+    "Player": {
+      "Attriubute": "value"
+    },
+    "Bullet": {
+      "Attriubute": "value"
+    },
+    "Methods": [
+      "HandleCollisions",
+      "DrawUIElements",
+      "Runlvl2"
+    ]
+  }
+}

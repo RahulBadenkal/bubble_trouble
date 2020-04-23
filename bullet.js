@@ -7,9 +7,6 @@ class Bullet {
     }
 
     draw() {
-
-        this.final.y = this.final.y - 20    
-        
         // Drawing the bullet
         noFill()
         strokeWeight(3);
@@ -19,10 +16,14 @@ class Bullet {
         let amplitude = 3
         for(var y=height; y>=this.final.y; y--){
             var angle = map(y, 0, period, 0, TWO_PI)
-            var x = map(sin(angle), - strum, strum, this.final.x-amplitude, this.final.x+amplitude)     
+            var x = map(sin(angle), - strum, strum, this.final.x-amplitude, this.final.x+amplitude)
             vertex(x, y)
-          }
+        }
         endShape();
+
+        this.final.y = this.final.y - 20    
+        
+
     }
 
 }

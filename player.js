@@ -30,4 +30,5 @@ class Player {
         this.blist.push(bullet);
     }
 
+
 }

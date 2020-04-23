@@ -32,7 +32,11 @@ class Ball {
     }
 
     draw() {
-        
+
+        strokeWeight(1);
+        fill(color(this.ballColor[0], this.ballColor[1], this.ballColor[2]))
+        circle(this.x, this.y, 2 * this.radius)
+
         this.x = this.x + this.velocity.x * UNIT_TIME
         this.y = this.y + this.velocity.y * UNIT_TIME  // Not exact, because of this the actual bounceHeight is not the exact same as the supplied bounceHeight
         
@@ -47,9 +51,7 @@ class Ball {
         // console.log('height', height)
         // console.log('Bounce Height speed', this.#bounceHeight)
         
-        strokeWeight(1);
-        fill(color(this.ballColor[0], this.ballColor[1], this.ballColor[2]))
-        circle(this.x, this.y, 2 * this.radius)
+
     }
 
 }

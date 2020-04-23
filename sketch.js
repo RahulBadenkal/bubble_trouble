@@ -47,6 +47,7 @@ function getBallBounceHeight(ballSize){
 
 let balls = []
 let player
+let roof
 
 let playerImg
 let bubbleBurstSound;
@@ -59,6 +60,8 @@ function setup() {
   playerImg = loadImage('assets/player.png');
   bubbleBurstSound = loadSound('assets/bubble_burst.mp3')
 
+  roof = new Roof(100, 0)
+
   balls.push(new Ball(120, 300, BALL_STD_SIZES.HUGE, getBallInitialVelocityRight(), getBallBounceHeight(BALL_STD_SIZES.HUGE), colors.RED))
   balls.push(new Ball(620, 400, BALL_STD_SIZES.MEDIUM, getBallInitialVelocityLeft(), getBallBounceHeight(BALL_STD_SIZES.MEDIUM), colors.BLUE))
   player = new Player(playerImg)
@@ -68,6 +71,8 @@ function draw() {
   background(0)
 
   // Draw all game objects
+  // Roof
+  roof.draw()
   // Balls
   for (let i=0; i<balls.length; i++){
     balls[i].draw()
@@ -131,7 +136,7 @@ function HandleWallBallCollisions(){
   }
 
   function isCollidedRoof(ball){
-    return ball.y <= ball.radius
+    return ball.y - ball.radius <= roof.y
   }
 
   for (let i=balls.length-1; i>=0; i--){
@@ -168,7 +173,7 @@ function HandleWallBallCollisions(){
 
 function HandleWallBulletCollisions(){
   function isCollidedRoof(bullet) {
-    return bullet.final.y <= 0
+    return bullet.final.y <= roof.y
   }
 
   for (let i=player.blist.length - 1; i>=0; i--){

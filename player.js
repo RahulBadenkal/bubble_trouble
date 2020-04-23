@@ -20,16 +20,6 @@ class Player {
     draw() {
         // rect(this.x, this.y, this.#w, this.#h)
         image(this.playerImg, this.x - this.w/2, this.y - this.h/2, this.w, this.h)
-        
-        let newBlist = []
-        for (let i=0; i<this.blist.length; i++) {
-            let bullet = this.blist[i]
-            if (bullet.active) {
-                bullet.draw()
-                newBlist.push(bullet)
-            }
-        }
-        this.blist = newBlist
     }
 
     shootBullet() {

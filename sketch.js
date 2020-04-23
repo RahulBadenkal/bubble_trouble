@@ -4,7 +4,7 @@
 // Per second is equivalent to per 
 const FRAMES_PER_SEC = 30
 const UNIT_TIME = 0.5
-const SPACE = 32
+const SPACE_BUTTON = 32
 const GRAVITY_CONSTANT = 3
 const THRESHOLD_RADIUS = 8
 const BALL_STD_SIZES = {
@@ -66,11 +66,21 @@ function setup() {
 
 function draw() {
   background(0)
+
+  // Draw all balls
   for (let i=0; i<balls.length; i++){
     balls[i].draw()
   }
+  // Draw player
   player.draw()
 
+  // Draw all Bullets
+  for (let i=0; i<player.blist.length; i++){
+    let bullet = player.blist[i]
+    bullet.draw()
+  }
+
+  // Handle User inputs
   if(keyIsDown(LEFT_ARROW)){
     // console.log('LEFT_ARROW_KEY_PRESSED', LEFT_ARROW)
     player.moveBackward();
@@ -81,26 +91,21 @@ function draw() {
     player.moveForward();
   }
 
-  if(keyIsDown(SPACE)){
+  if(keyIsDown(SPACE_BUTTON)){
     // console.log('SPACE_KEY_PRESSED', SPACE)
     player.shootBullet(player.x, player.y);
   }
 
+  // Handle Collisions
   HandleWallPlayerCollisions()
+
+  HandleWallBallCollisions()
+
+  HandleWallBulletCollisions()
 
   HandleBulletBallCollisions()
 
   HandleBallsPlayerCollsions()
-
-
-  // Destroy the ball if it hits the roof
-  for (let i=balls.length - 1; i>=0; i--){
-    let ball = balls[i]
-    if (ball.isCollidedRoof()){
-      balls.splice(i, 1);
-      ball.onDestroy()
-    }
-  }
 
 }
 
@@ -118,6 +123,69 @@ function HandleWallPlayerCollisions(){
     }
 }
 
+
+function HandleWallBallCollisions(){
+  function isCollidedRightWall(ball){
+    return width - ball.x <= ball.radius
+  }
+
+  function isCollidedLeftWall(ball){
+    return ball.x <= ball.radius
+  }
+
+  function isCollidedFloor(ball){
+    return height - ball.y <= ball.radius
+  }
+
+  function isCollidedRoof(ball){
+    return ball.y <= ball.radius
+  }
+
+  for (let i=balls.length-1; i>=0; i--){
+    let ball = balls[i]
+
+    if (isCollidedRightWall(ball)){
+      // console.log('Right Wall')
+      ball.x = width - ball.radius
+      ball.velocity.x = Math.abs(ball.velocity.x) * -1
+    }
+    else if(isCollidedLeftWall(ball)){
+      // console.log('Left Wall')
+      ball.x = ball.radius
+      ball.velocity.x = Math.abs(ball.velocity.x)
+    }
+
+    if(isCollidedFloor(ball)){
+      // console.log('Floor')
+      ball.y = height - ball.radius
+      ball.velocity.y = -1 * ball.getBounceHeightSpeed(ball.bounceHeight)
+    }
+    else if(isCollidedRoof(ball)){
+      // console.log('Roof')
+      // ball.y = ball.radius
+      // ball.velocity.y = Math.abs(ball.velocity.y)
+      // Destroy the ball if it hits the roof
+      balls.splice(i, 1);
+      ball.onDestroy()
+    }
+  }
+
+}
+
+
+function HandleWallBulletCollisions(){
+  function isCollidedRoof(bullet) {
+    return bullet.final.y <= 0
+  }
+
+  for (let i=player.blist.length - 1; i>=0; i--){
+    let bullet = player.blist[i]
+    if (isCollidedRoof(bullet)) {
+      // Bullet once reached top of screen gets destroyed
+      player.blist.splice(i, 1)
+    }
+  }
+}
 
 function HandleBulletBallCollisions()
 {  
@@ -179,9 +247,9 @@ function checkRectIntersect(l1, r1, l2, r2){
   }
   
   // If one rectangle is above other 
-  if (l1.y < r2.y || l2.y < r1.y){ 
+  if (l1.y < r2.y || l2.y < r1.y){
       return false
   }
   
-  return true 
+  return true
 }

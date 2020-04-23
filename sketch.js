@@ -67,14 +67,14 @@ function setup() {
 function draw() {
   background(0)
 
-  // Draw all balls
+  // Draw all game objects
+  // Balls
   for (let i=0; i<balls.length; i++){
     balls[i].draw()
   }
-  // Draw player
+  // Player
   player.draw()
-
-  // Draw all Bullets
+  // Bullets
   for (let i=0; i<player.blist.length; i++){
     let bullet = player.blist[i]
     bullet.draw()
@@ -85,28 +85,21 @@ function draw() {
     // console.log('LEFT_ARROW_KEY_PRESSED', LEFT_ARROW)
     player.moveBackward();
   }
-
   if(keyIsDown(RIGHT_ARROW)){
     // console.log('RIGHT_ARROW_KEY_PRESSED', RIGHT_ARROW)
     player.moveForward();
   }
-
   if(keyIsDown(SPACE_BUTTON)){
     // console.log('SPACE_KEY_PRESSED', SPACE)
     player.shootBullet(player.x, player.y);
   }
 
   // Handle Collisions
-  HandleWallPlayerCollisions()
-
-  HandleWallBallCollisions()
-
   HandleWallBulletCollisions()
-
-  HandleBulletBallCollisions()
-
   HandleBallsPlayerCollsions()
-
+  HandleBulletBallCollisions()
+  HandleWallPlayerCollisions()
+  HandleWallBallCollisions()
 }
 
 
@@ -186,6 +179,7 @@ function HandleWallBulletCollisions(){
     }
   }
 }
+
 
 function HandleBulletBallCollisions()
 {  

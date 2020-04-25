@@ -9,6 +9,19 @@ class Roof {
         this.speed = speed
     }
 
+    getBoundingBox(){
+        return [
+            createVector(0, 0),
+            createVector(width, 0),
+            createVector(width, this.y),
+            createVector(0, this.y)
+        ]
+    }
+
+    getCentre(){
+        return createVector(width/2, this.y/2)
+    }
+
     draw() {
         strokeWeight(1);
         fill(color(this.roofColor[0], this.roofColor[1], this.roofColor[2]))

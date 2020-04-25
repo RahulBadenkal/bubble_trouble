@@ -23,6 +23,19 @@ class Ball {
         this.ballColor = ballColor
     }
 
+    getBoundingBox(){
+        return [
+            createVector(this.x - this.radius, this.y - this.radius),
+            createVector(this.x + this.radius, this.y - this.radius),
+            createVector(this.x + this.radius, this.y + this.radius),
+            createVector(this.x - this.radius, this.y + this.radius),
+        ]
+    }
+
+    getCentre(){
+        return createVector(this.x, this.y)
+    }
+
     getBounceHeightSpeed(bounceHeight){
         return Math.sqrt(2 * GRAVITY_CONSTANT * bounceHeight)
     }
@@ -32,15 +45,16 @@ class Ball {
     }
 
     draw() {
+        this.x = this.x + this.velocity.x * UNIT_TIME
+        this.y = this.y + this.velocity.y * UNIT_TIME  // Not exact, because of this the actual bounceHeight is not the exact same as the supplied bounceHeight
+
+        this.velocity.y = this.velocity.y + GRAVITY_CONSTANT * UNIT_TIME
 
         strokeWeight(1);
         fill(color(this.ballColor[0], this.ballColor[1], this.ballColor[2]))
         circle(this.x, this.y, 2 * this.radius)
 
-        this.x = this.x + this.velocity.x * UNIT_TIME
-        this.y = this.y + this.velocity.y * UNIT_TIME  // Not exact, because of this the actual bounceHeight is not the exact same as the supplied bounceHeight
-        
-        this.velocity.y = this.velocity.y + GRAVITY_CONSTANT * UNIT_TIME
+
 
         // console.log('count', frameCount)
         // console.log('x', this.x)

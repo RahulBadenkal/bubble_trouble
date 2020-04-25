@@ -26,7 +26,9 @@ class Roof {
         strokeWeight(1);
         fill(color(this.roofColor[0], this.roofColor[1], this.roofColor[2]))
         rect(0, 0, width, this.y);
+    }
 
+    updatePosition(){
         this.y = this.y + this.speed * UNIT_TIME
     }
 

@@ -21,8 +21,6 @@ class Bullet {
     }
 
     draw() {
-        this.final.y = this.final.y - 20
-
         // Drawing the bullet
         noFill()
         strokeWeight(3);
@@ -36,9 +34,10 @@ class Bullet {
         }
         endShape();
 
+    }
 
-        
-
+    updatePosition(){
+        this.final.y = this.final.y - 20
     }
 
 }

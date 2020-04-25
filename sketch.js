@@ -32,7 +32,7 @@ function setup() {
 }
 
 function onDataReceivedFromServer(data){
-  console.log('Data Received From server:', data)
+  // console.log('Data Received From server:', data)
   for (let i=0; i<data.keysPressed.length; i++){
     let keyPressed = data.keysPressed[i]
     if (keyPressed === KEYS.LEFT_ARROW){
@@ -74,6 +74,7 @@ function draw() {
     HandleBulletBallCollisions()
 
     // Handle User inputs
+    // Update player positions for next game loop
     if (keyIsDown(KEYS.LEFT_ARROW)) {
       sharedData.keysPressed.push(KEYS.LEFT_ARROW)
       player.moveBackward()
@@ -84,9 +85,23 @@ function draw() {
     }
     if (keyIsDown(KEYS.SPACE)) {
       sharedData.keysPressed.push(KEYS.SPACE)
-      player.shootBullet(player.x, player.y);
+      player.shootBullet(player.x, player.y)
     }
 
+    // Update Positions for next Game Loop
+    // Roof
+    roof.updatePosition()
+    // Balls
+    for (let i = 0; i < balls.length; i++) {
+      balls[i].updatePosition()
+    }
+    // Bullets
+    for (let i = 0; i < player.blist.length; i++) {
+      let bullet = player.blist[i]
+      bullet.updatePosition()
+    }
+
+    // Share Data with server
     if (sharedData.keysPressed.length !== 0){
       socket.emit('sharedData', sharedData)  // Send Data to Server
       sharedData.keysPressed = []

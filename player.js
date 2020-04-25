@@ -3,7 +3,7 @@ class Player {
     y
     w = 40
     h = 40
-    blist = []  // Array of Bullets.
+    blist = []  // Array of Bullets. Should Ideally be a Linked List not Array
     #stepDistance = 5
     constructor(x, playerImg){
         this.x = x

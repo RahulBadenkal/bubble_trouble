@@ -1,6 +1,6 @@
 // Constants
 const FRAMES_PER_SEC = 30
-const WIDTH = 600
+const WIDTH = 650
 const HEIGHT = 600
 const UNIT_TIME = 0.5
 const KEYS = {

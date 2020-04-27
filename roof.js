@@ -29,7 +29,7 @@ class Roof {
     }
 
     updatePosition(){
-        this.y = this.y + this.speed * UNIT_TIME
+        this.y = this.y + this.speed * constants.UNIT_TIME
     }
 
 }

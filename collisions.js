@@ -95,9 +95,11 @@ function HandleBulletBallCollisions()
                 ball.onDestroy()
 
                 // Add more balls
-                if (ball.radius > THRESHOLD_RADIUS ){
-                    balls.push(new Ball(ball.x, ball.y, ball.radius/2, getBallInitialVelocityLeft(), getBallBounceHeight(ball.radius/2), ball.ballColor))
-                    balls.push(new Ball(ball.x, ball.y, ball.radius/2, getBallInitialVelocityRight(), getBallBounceHeight(ball.radius/2), ball.ballColor))
+                if (ball.radius > constants.THRESHOLD_RADIUS ){
+                    balls.push(new Ball(ball.x, ball.y, ball.radius/2, constants.getBallInitialVelocityLeft(),
+                        constants.getBallBounceHeight(ball.radius/2), ball.ballColor))
+                    balls.push(new Ball(ball.x, ball.y, ball.radius/2, constants.getBallInitialVelocityRight(),
+                        constants.getBallBounceHeight(ball.radius/2), ball.ballColor))
                 }
 
                 // Destroy Bullet

@@ -37,7 +37,7 @@ class Ball {
     }
 
     getBounceHeightSpeed(bounceHeight){
-        return Math.sqrt(2 * GRAVITY_CONSTANT * bounceHeight)
+        return Math.sqrt(2 * constants.GRAVITY_CONSTANT * bounceHeight)
     }
 
     onDestroy(){
@@ -61,10 +61,10 @@ class Ball {
     }
 
     updatePosition(){
-        this.x = this.x + this.velocity.x * UNIT_TIME
-        this.y = this.y + this.velocity.y * UNIT_TIME  // Not exact, because of this the actual bounceHeight is not the exact same as the supplied bounceHeight
+        this.x = this.x + this.velocity.x * constants.UNIT_TIME
+        this.y = this.y + this.velocity.y * constants.UNIT_TIME  // Not exact, because of this the actual bounceHeight is not the exact same as the supplied bounceHeight
 
-        this.velocity.y = this.velocity.y + GRAVITY_CONSTANT * UNIT_TIME
+        this.velocity.y = this.velocity.y + constants.GRAVITY_CONSTANT * constants.UNIT_TIME
 
     }
 

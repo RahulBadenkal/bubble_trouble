@@ -1,11 +1,15 @@
+// 3rd Party Libs
 let express = require('express')
 let socket = require('socket.io')
 var path = require('path');
 
+// App imports
+let constants = require('./constants')
+
 let app = express()
 
 app.use(express.static(__dirname));
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || constants.DEBUG_PORT;
 
 let server = app.listen(PORT)
 

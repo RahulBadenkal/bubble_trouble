@@ -14,20 +14,22 @@ let sharedData = {
 }
 
 function setup() {
-  socket = io.connect('http://localhost:3000')
+  socket = io.connect(constants.SERVER)
   socket.on('sharedData', onDataReceivedFromServer)
 
-  createCanvas(WIDTH, HEIGHT)  // createCanvas must be the first statement
+  createCanvas(constants.WIDTH, constants.HEIGHT)  // createCanvas must be the first statement
   stroke(255)    // Set line drawing color to white
-  frameRate(FRAMES_PER_SEC)
+  frameRate(constants.FRAMES_PER_SEC)
 
   playerImg = loadImage('assets/player.png');
   bubbleBurstSound = loadSound('assets/bubble_burst.mp3')
 
   roof = new Roof(0, 0)
 
-  balls.push(new Ball(120, 300, BALL_STD_SIZES.HUGE, getBallInitialVelocityRight(), getBallBounceHeight(BALL_STD_SIZES.HUGE), colors.RED))
-  balls.push(new Ball(620, 400, BALL_STD_SIZES.MEDIUM, getBallInitialVelocityLeft(), getBallBounceHeight(BALL_STD_SIZES.MEDIUM), colors.BLUE))
+  balls.push(new Ball(120, 300, constants.BALL_STD_SIZES.HUGE, constants.getBallInitialVelocityRight(),
+      constants.getBallBounceHeight(constants.BALL_STD_SIZES.HUGE), constants.colors.RED))
+  balls.push(new Ball(620, 400, constants.BALL_STD_SIZES.MEDIUM, constants.getBallInitialVelocityLeft(),
+      constants.getBallBounceHeight(constants.BALL_STD_SIZES.MEDIUM), constants.colors.BLUE))
   player = new Player(500, playerImg)
 }
 
@@ -35,13 +37,13 @@ function onDataReceivedFromServer(data){
   // console.log('Data Received From server:', data)
   for (let i=0; i<data.keysPressed.length; i++){
     let keyPressed = data.keysPressed[i]
-    if (keyPressed === KEYS.LEFT_ARROW){
+    if (keyPressed === constants.KEYS.LEFT_ARROW){
       player.moveBackward()
     }
-    if (keyPressed === KEYS.RIGHT_ARROW){
+    if (keyPressed === constants.KEYS.RIGHT_ARROW){
       player.moveForward()
     }
-    if (keyPressed === KEYS.SPACE){
+    if (keyPressed === constants.KEYS.SPACE){
       player.shootBullet()
     }
   }
@@ -75,16 +77,16 @@ function draw() {
 
     // Handle User inputs
     // Update player positions for next game loop
-    if (keyIsDown(KEYS.LEFT_ARROW)) {
-      sharedData.keysPressed.push(KEYS.LEFT_ARROW)
+    if (keyIsDown(constants.KEYS.LEFT_ARROW)) {
+      sharedData.keysPressed.push(constants.KEYS.LEFT_ARROW)
       player.moveBackward()
     }
-    if (keyIsDown(KEYS.RIGHT_ARROW)) {
-      sharedData.keysPressed.push(KEYS.RIGHT_ARROW)
+    if (keyIsDown(constants.KEYS.RIGHT_ARROW)) {
+      sharedData.keysPressed.push(constants.KEYS.RIGHT_ARROW)
       player.moveForward();
     }
-    if (keyIsDown(KEYS.SPACE)) {
-      sharedData.keysPressed.push(KEYS.SPACE)
+    if (keyIsDown(constants.KEYS.SPACE)) {
+      sharedData.keysPressed.push(constants.KEYS.SPACE)
       player.shootBullet(player.x, player.y)
     }
 
@@ -117,6 +119,7 @@ function draw() {
     }
     else{
       console.log('Unexpected Error: ', err)
+      throw err
     }
   }
 

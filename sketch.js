@@ -4,6 +4,7 @@ let socket
 
 let balls = []
 let player
+let player2
 let roof
 
 let playerImg
@@ -29,6 +30,7 @@ function setup() {
   balls.push(new Ball(120, 300, BALL_STD_SIZES.HUGE, getBallInitialVelocityRight(), getBallBounceHeight(BALL_STD_SIZES.HUGE), colors.RED))
   balls.push(new Ball(620, 400, BALL_STD_SIZES.MEDIUM, getBallInitialVelocityLeft(), getBallBounceHeight(BALL_STD_SIZES.MEDIUM), colors.BLUE))
   player = new Player(500, playerImg)
+  player2 = new Player(400, playerImg)
 }
 
 function onDataReceivedFromServer(data){
@@ -36,13 +38,13 @@ function onDataReceivedFromServer(data){
   for (let i=0; i<data.keysPressed.length; i++){
     let keyPressed = data.keysPressed[i]
     if (keyPressed === KEYS.LEFT_ARROW){
-      player.moveBackward()
+      player2.moveBackward()
     }
     if (keyPressed === KEYS.RIGHT_ARROW){
-      player.moveForward()
+      player2.moveForward()
     }
     if (keyPressed === KEYS.SPACE){
-      player.shootBullet()
+      player2.shootBullet()
     }
   }
 }
@@ -60,9 +62,14 @@ function draw() {
     }
     // Player
     player.draw()
+    player2.draw()
     // Bullets
     for (let i = 0; i < player.blist.length; i++) {
       let bullet = player.blist[i]
+      bullet.draw()
+    }
+    for (let i = 0; i < player2.blist.length; i++) {
+      let bullet = player2.blist[i]
       bullet.draw()
     }
 
@@ -98,6 +105,10 @@ function draw() {
     // Bullets
     for (let i = 0; i < player.blist.length; i++) {
       let bullet = player.blist[i]
+      bullet.updatePosition()
+    }
+    for (let i = 0; i < player2.blist.length; i++) {
+      let bullet = player2.blist[i]
       bullet.updatePosition()
     }
 

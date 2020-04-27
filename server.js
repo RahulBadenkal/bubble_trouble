@@ -1,6 +1,7 @@
 // 3rd Party Libs
 let express = require('express')
 let socket = require('socket.io')
+var path = require('path');
 
 // App imports
 let constants = require('./constants')

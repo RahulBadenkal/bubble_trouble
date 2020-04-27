@@ -14,7 +14,7 @@ let sharedData = {
 }
 
 function setup() {
-  socket = io.connect('http://localhost:3000')
+  socket = io.connect(SERVER)
   socket.on('sharedData', onDataReceivedFromServer)
 
   createCanvas(WIDTH, HEIGHT)  // createCanvas must be the first statement

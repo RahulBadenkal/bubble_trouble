@@ -1,4 +1,6 @@
 // Constants
+const ISDEBUG = true
+const SERVER = ISDEBUG? "http://localhost:3000": "https://bubble-trouble-my.herokuapp.com/"
 const FRAMES_PER_SEC = 30
 const WIDTH = 1000
 const HEIGHT = 600

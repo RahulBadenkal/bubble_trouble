@@ -4,9 +4,10 @@ var path = require('path');
 
 let app = express()
 
-app.use(express.static(__dirname))
+app.use(express.static(__dirname));
+const PORT = process.env.PORT || 3000;
 
-let server = app.listen(8000)
+let server = app.listen(PORT)
 
 let io = socket(server)
 io.sockets.on('connection', newConnection)

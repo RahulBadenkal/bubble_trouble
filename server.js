@@ -1,10 +1,15 @@
 let express = require('express')
 let socket = require('socket.io')
+var path = require('path');
 
 let app = express()
 let server = app.listen(3000)
 
-app.use(express.static('./'))
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+// app.use(express.static('./'))
 
 let io = socket(server)
 io.sockets.on('connection', newConnection)

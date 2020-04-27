@@ -14,6 +14,7 @@ let sharedData = {
 }
 
 function setup() {
+  console.log(constants.SERVER)
   socket = io.connect(constants.SERVER)
   socket.on('sharedData', onDataReceivedFromServer)
 

@@ -9,6 +9,7 @@ let roof
 
 let playerImg
 let bubbleBurstSound
+let start_game=false
 
 let sharedData = {
   'keysPressed': []
@@ -33,104 +34,115 @@ function setup() {
   player2 = new Player(400, playerImg)
 }
 
-function onDataReceivedFromServer(data){
+function onDataReceivedFromServer(data) {
   // console.log('Data Received From server:', data)
-  for (let i=0; i<data.keysPressed.length; i++){
+  for (let i = 0; i < data.keysPressed.length; i++) {
     let keyPressed = data.keysPressed[i]
-    if (keyPressed === KEYS.LEFT_ARROW){
+    if (keyPressed === KEYS.LEFT_ARROW) {
       player2.moveBackward()
     }
-    if (keyPressed === KEYS.RIGHT_ARROW){
+    if (keyPressed === KEYS.RIGHT_ARROW) {
       player2.moveForward()
     }
-    if (keyPressed === KEYS.SPACE){
+    if (keyPressed === KEYS.SPACE) {
       player2.shootBullet()
+    }
+    if (keyPressed === KEYS.UP_ARROW) {
+      start_game = true;
     }
   }
 }
 
 function draw() {
-  try {
-    background(0)
+  if (start_game==true) {
+    try {
+      background(0)
 
-    // Draw all game objects
-    // Roof
-    roof.draw()
-    // Balls
-    for (let i = 0; i < balls.length; i++) {
-      balls[i].draw()
-    }
-    // Player
-    player.draw()
-    player2.draw()
-    // Bullets
-    for (let i = 0; i < player.blist.length; i++) {
-      let bullet = player.blist[i]
-      bullet.draw()
-    }
-    for (let i = 0; i < player2.blist.length; i++) {
-      let bullet = player2.blist[i]
-      bullet.draw()
-    }
+      // Draw all game objects
+      // Roof
+      roof.draw()
+      // Balls
+      for (let i = 0; i < balls.length; i++) {
+        balls[i].draw()
+      }
+      // Player
+      player.draw()
+      player2.draw()
+      // Bullets
+      for (let i = 0; i < player.blist.length; i++) {
+        let bullet = player.blist[i]
+        bullet.draw()
+      }
+      for (let i = 0; i < player2.blist.length; i++) {
+        let bullet = player2.blist[i]
+        bullet.draw()
+      }
 
-    // Handle Collisions
-    HandleWallPlayerCollisions()
-    HandleWallBallCollisions()
-    HandleWallBulletCollisions()
-    HandleBallsPlayerCollsions()
-    HandleBulletBallCollisions()
+      // Handle Collisions
+      HandleWallPlayerCollisions()
+      HandleWallBallCollisions()
+      HandleWallBulletCollisions()
+      HandleBallsPlayerCollsions()
+      HandleBulletBallCollisions()
 
-    // Handle User inputs
-    // Update player positions for next game loop
-    if (keyIsDown(KEYS.LEFT_ARROW)) {
-      sharedData.keysPressed.push(KEYS.LEFT_ARROW)
-      player.moveBackward()
-    }
-    if (keyIsDown(KEYS.RIGHT_ARROW)) {
-      sharedData.keysPressed.push(KEYS.RIGHT_ARROW)
-      player.moveForward();
-    }
-    if (keyIsDown(KEYS.SPACE)) {
-      sharedData.keysPressed.push(KEYS.SPACE)
-      player.shootBullet(player.x, player.y)
-    }
+      // Handle User inputs
+      // Update player positions for next game loop
+      if (keyIsDown(KEYS.LEFT_ARROW)) {
+        sharedData.keysPressed.push(KEYS.LEFT_ARROW)
+        player.moveBackward()
+      }
+      if (keyIsDown(KEYS.RIGHT_ARROW)) {
+        sharedData.keysPressed.push(KEYS.RIGHT_ARROW)
+        player.moveForward();
+      }
+      if (keyIsDown(KEYS.SPACE)) {
+        sharedData.keysPressed.push(KEYS.SPACE)
+        player.shootBullet(player.x, player.y)
+      }
 
-    // Update Positions for next Game Loop
-    // Roof
-    roof.updatePosition()
-    // Balls
-    for (let i = 0; i < balls.length; i++) {
-      balls[i].updatePosition()
-    }
-    // Bullets
-    for (let i = 0; i < player.blist.length; i++) {
-      let bullet = player.blist[i]
-      bullet.updatePosition()
-    }
-    for (let i = 0; i < player2.blist.length; i++) {
-      let bullet = player2.blist[i]
-      bullet.updatePosition()
-    }
+      // Update Positions for next Game Loop
+      // Roof
+      roof.updatePosition()
+      // Balls
+      for (let i = 0; i < balls.length; i++) {
+        balls[i].updatePosition()
+      }
+      // Bullets
+      for (let i = 0; i < player.blist.length; i++) {
+        let bullet = player.blist[i]
+        bullet.updatePosition()
+      }
+      for (let i = 0; i < player2.blist.length; i++) {
+        let bullet = player2.blist[i]
+        bullet.updatePosition()
+      }
 
-    // Share Data with server
-    if (sharedData.keysPressed.length !== 0){
+      // Share Data with server
+      if (sharedData.keysPressed.length !== 0) {
+        socket.emit('sharedData', sharedData)  // Send Data to Server
+        sharedData.keysPressed = []
+      }
+
+    }
+    catch (err) {
+      if (err instanceof GameEnd) {
+        console.log('Game Ended due to: ', err.message)
+        noLoop()
+      }
+      else {
+        console.log('Unexpected Error: ', err)
+      }
+    }
+  }
+  else{
+    if (keyIsDown(KEYS.UP_ARROW)) {
+      sharedData.keysPressed.push(KEYS.UP_ARROW)
+    }
+    if (sharedData.keysPressed.length !== 0) {
       socket.emit('sharedData', sharedData)  // Send Data to Server
       sharedData.keysPressed = []
     }
-
-
-
   }
-  catch (err) {
-    if (err instanceof GameEnd) {
-      console.log('Game Ended due to: ', err.message)
-      noLoop()
-    }
-    else{
-      console.log('Unexpected Error: ', err)
-    }
-  }
-
 }
 
 

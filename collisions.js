@@ -9,6 +9,16 @@ function HandleWallPlayerCollisions(){
         // console.log('Collided Right')
         player.x = width - (player.w)/2
     }
+
+    if ( (player2.x - player2.w/2) <= 0){
+        // console.log('Collided left')
+        player2.x = player2.w/2
+    }
+    // Right Wall Collision
+    else if((player2.x + player2.w/2) >= width){
+        // console.log('Collided Right')
+        player2.x = width - (player2.w)/2
+    }
 }
 
 
@@ -71,6 +81,13 @@ function HandleWallBulletCollisions(){
             player.blist.splice(i, 1)
         }
     }
+    for (let j=player2.blist.length - 1; j>=0; j--){
+        let bullet = player2.blist[j]
+        if (isCollidedRoof(bullet)) {
+            // Bullet once reached top of screen gets destroyed
+            player2.blist.splice(j, 1)
+        }
+    }
 }
 
 
@@ -107,6 +124,38 @@ function HandleBulletBallCollisions()
             }
         }
     }
+
+    for (let i=player2.blist.length - 1; i>=0; i--){
+        // debugger;
+        let bullet = player2.blist[i]
+
+        for (let j=balls.length - 1; j>=0; j--){
+            let ball = balls[j]
+
+            // Check collision
+            // Consider the circle to be square
+            let yIntersect = bullet.final.y <= ball.y + ball.radius
+            let xIntersect = bullet.final.x >= ball.x - ball.radius && bullet.final.x <= ball.x + ball.radius
+            if (xIntersect && yIntersect){
+                // console.log('Intersect')
+
+                // Destroy Ball
+                balls.splice(j, 1)
+                ball.onDestroy()
+
+                // Add more balls
+                if (ball.radius > THRESHOLD_RADIUS ){
+                    balls.push(new Ball(ball.x, ball.y, ball.radius/2, getBallInitialVelocityLeft(), getBallBounceHeight(ball.radius/2), ball.ballColor))
+                    balls.push(new Ball(ball.x, ball.y, ball.radius/2, getBallInitialVelocityRight(), getBallBounceHeight(ball.radius/2), ball.ballColor))
+                }
+
+                // Destroy Bullet
+                player2.blist.splice(i, 1)
+
+                break
+            }
+        }
+    }
 }
 
 function HandleBallsPlayerCollsions(){
@@ -120,9 +169,9 @@ function HandleBallsPlayerCollsions(){
         let ballLeftTop = createVector(ball.x - ball.radius, ball.y - ball.radius)
         let ballRightBottom = createVector(ball.x + ball.radius, ball.y + ball.radius)
 
-        if(checkRectIntersect(playerLeftTop, playerRightBottom, ballLeftTop, ballRightBottom)){
+        /*if(checkRectIntersect(playerLeftTop, playerRightBottom, ballLeftTop, ballRightBottom)){
             throw new GameEnd('Ball Collided with Player')
-        }
+        } */
     }
 }
 

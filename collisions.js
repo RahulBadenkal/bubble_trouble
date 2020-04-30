@@ -51,6 +51,7 @@ function HandleWallBallCollisions(){
         else if(isCollidedRoof(ball)){
             // console.log('Roof')
             // Destroy the ball if it hits the roof
+            // TODO: Splicing is costly, use a different way
             balls.splice(i, 1);
             ball.onDestroy()
         }
@@ -68,6 +69,7 @@ function HandleWallBulletCollisions(){
         let bullet = player.blist[i]
         if (isCollidedRoof(bullet)) {
             // Bullet once reached top of screen gets destroyed
+            // TODO: Splicing is costly, use a different way
             player.blist.splice(i, 1)
         }
     }
@@ -91,6 +93,7 @@ function HandleBulletBallCollisions()
                 // console.log('Intersect')
 
                 // Destroy Ball
+                // TODO: Splicing is costly, use a different way
                 balls.splice(j, 1)
                 ball.onDestroy()
 
@@ -103,6 +106,7 @@ function HandleBulletBallCollisions()
                 }
 
                 // Destroy Bullet
+                // TODO: Splicing is costly, use a different way
                 player.blist.splice(i, 1)
 
                 break

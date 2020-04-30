@@ -1,7 +1,6 @@
 // 3rd Party Libs
 let express = require('express')
 let socket = require('socket.io')
-var path = require('path');
 
 // App imports
 let constants = require('./constants')
@@ -24,7 +23,7 @@ function newConnection(socket){
 
     function onDataRecivedFromClient(data){
         socket.broadcast.emit('sharedData', data);
-        // console.log(data)
+        console.log(data)
     }
 }
 

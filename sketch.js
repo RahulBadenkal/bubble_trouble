@@ -83,7 +83,7 @@ function draw() {
     }
     if (keyIsDown(constants.KEYS.RIGHT_ARROW)) {
       sharedData.keysPressed.push(constants.KEYS.RIGHT_ARROW)
-      player.moveForward();
+      player.moveForward()
     }
     if (keyIsDown(constants.KEYS.SPACE)) {
       sharedData.keysPressed.push(constants.KEYS.SPACE)

@@ -1,9 +1,9 @@
 (function(exports){
 
     // Constants
-    exports.ISDEBUG = true
+    exports.ISDEBUG = false
     exports.DEBUG_PORT = 3000
-    exports.SERVER = exports.ISDEBUG? "http://localhost:${exports.DEBUG_PORT}": "https://bubble-trouble-my.herokuapp.com/"
+    exports.SERVER = exports.ISDEBUG? `http://localhost:${exports.DEBUG_PORT}`: "https://bubble-trouble-my.herokuapp.com/"
     exports.FRAMES_PER_SEC = 30
     exports.WIDTH = 1000
     exports.HEIGHT = 600

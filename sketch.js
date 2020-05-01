@@ -107,8 +107,8 @@ let app = new Vue({
           roof = new Roof(0, 0)
           // balls.push(new Ball(120, 300, constants.BALL_STD_SIZES.HUGE, constants.getBallInitialVelocityRight(),
           //   constants.getBallBounceHeight(constants.BALL_STD_SIZES.HUGE), constants.colors.RED))
-          // balls.push(new Ball(620, 400, constants.BALL_STD_SIZES.MEDIUM, constants.getBallInitialVelocityLeft(),
-          //   constants.getBallBounceHeight(constants.BALL_STD_SIZES.MEDIUM), constants.colors.BLUE))
+          balls.push(new Ball(620, 400, constants.BALL_STD_SIZES.MEDIUM, constants.getBallInitialVelocityLeft(),
+            constants.getBallBounceHeight(constants.BALL_STD_SIZES.MEDIUM), constants.colors.BLUE))
           player = new Player(500, playerImg)
         }
 

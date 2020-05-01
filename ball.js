@@ -25,15 +25,15 @@ class Ball {
 
     getBoundingBox(){
         return [
-            createVector(this.x - this.radius, this.y - this.radius),
-            createVector(this.x + this.radius, this.y - this.radius),
-            createVector(this.x + this.radius, this.y + this.radius),
-            createVector(this.x - this.radius, this.y + this.radius),
+            P5.createVector(this.x - this.radius, this.y - this.radius),
+            P5.createVector(this.x + this.radius, this.y - this.radius),
+            P5.createVector(this.x + this.radius, this.y + this.radius),
+            P5.createVector(this.x - this.radius, this.y + this.radius),
         ]
     }
 
     getCentre(){
-        return createVector(this.x, this.y)
+        return P5.createVector(this.x, this.y)
     }
 
     getBounceHeightSpeed(bounceHeight){
@@ -45,9 +45,9 @@ class Ball {
     }
 
     draw() {
-        strokeWeight(1);
-        fill(color(this.ballColor[0], this.ballColor[1], this.ballColor[2]))
-        circle(this.x, this.y, 2 * this.radius)
+        P5.strokeWeight(1);
+        P5.fill(P5.color(this.ballColor[0], this.ballColor[1], this.ballColor[2]))
+        P5.circle(this.x, this.y, 2 * this.radius)
 
         // console.log('count', frameCount)
         // console.log('x', this.x)

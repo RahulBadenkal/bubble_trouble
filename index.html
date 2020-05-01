@@ -2,29 +2,63 @@
 <html lang="">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>p5.js example</title>
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>  <!-- Download locally later -->
-  <script src="p5/p5.min.js"></script>
-  <script src="p5/addons/p5.sound.min.js"></script>
-  <script src="exceptions.js"></script>
-  <script src="constants.js"></script>
-  <script src="ball.js"></script>
-  <script src="bullet.js"></script>
-  <script src="player.js"></script>
-  <script src="roof.js"></script>
-  <script src="collisions.js"></script>
-  <script src="sketch.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>p5.js example</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
+<div id="bubble-trouble">
+
+    <div id="menu" v-if="!isConnected">
+        <!-- Single/Multiplayer Game Selection -->
+        <div>
+            <p>Choose one:</p>
+            <input type="radio" id="singleGameType" value="single" v-model="selectedGameType"
+                   v-on:change="startGame({'gameType': selectedGameType})">
+            <label for="singleGameType">Single</label>
+            <input type="radio" id="multiGameType" value="multi" v-model="selectedGameType">
+            <label for="multiGameType">Multiplayer</label>
+        </div>
+
+        <!--Details for multiplayer -->
+        <div v-if="selectedGameType === 'multi'">
+            <label for="uname">Username:</label>
+            <input type="text" id="uname" v-model="username">
+            <button v-on:click="join()" v-bind:disabled="isWaiting">Connect</button>
+            <span v-if="isWaiting">Connecting to another player.....</span>
+            <br><br>
+        </div>
+    </div>
+
+    <div id="game" v-else>
+        <span v-if="selectedGameType === 'multi'"> Username: {{username}}</span>
+        <button v-on:click="exit()">Disconnect</button>
+        <div id="gameCanvas"></div>
+    </div>
+
+</div>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<!-- Download locally later -->
+<script src="p5/p5.min.js"></script>
+<script src="p5/addons/p5.sound.min.js"></script>
+<script src="utils.js"></script>
+<script src="exceptions.js"></script>
+<script src="constants.js"></script>
+<script src="ball.js"></script>
+<script src="bullet.js"></script>
+<script src="player.js"></script>
+<script src="roof.js"></script>
+<script src="collisions.js"></script>
+<script src="sketch.js"></script>
 
 </html>

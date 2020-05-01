@@ -11,21 +11,21 @@ class Roof {
 
     getBoundingBox(){
         return [
-            createVector(0, 0),
-            createVector(width, 0),
-            createVector(width, this.y),
-            createVector(0, this.y)
+            P5.createVector(0, 0),
+            P5.createVector(width, 0),
+            P5.createVector(width, this.y),
+            P5.createVector(0, this.y)
         ]
     }
 
     getCentre(){
-        return createVector(width/2, this.y/2)
+        return P5.createVector(width/2, this.y/2)
     }
 
     draw() {
-        strokeWeight(1);
-        fill(color(this.roofColor[0], this.roofColor[1], this.roofColor[2]))
-        rect(0, 0, width, this.y);
+        P5.strokeWeight(1);
+        P5.fill(P5.color(this.roofColor[0], this.roofColor[1], this.roofColor[2]))
+        P5.rect(0, 0, P5.width, this.y);
     }
 
     updatePosition(){

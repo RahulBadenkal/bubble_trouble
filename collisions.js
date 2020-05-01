@@ -1,20 +1,22 @@
-function HandleWallPlayerCollisions(){
+(function(exports){
+
+exports.HandleWallPlayerCollisions = function(){
     // Left wall collision
     if ( (player.x - player.w/2) <= 0){
         // console.log('Collided left')
         player.x = player.w/2
     }
     // Right Wall Collision
-    else if((player.x + player.w/2) >= width){
+    else if((player.x + player.w/2) >= P5.width){
         // console.log('Collided Right')
-        player.x = width - (player.w)/2
+        player.x = P5.width - (player.w)/2
     }
 }
 
 
-function HandleWallBallCollisions(){
+exports.HandleWallBallCollisions = function(){
     function isCollidedRightWall(ball){
-        return width - ball.x <= ball.radius
+        return P5.width - ball.x <= ball.radius
     }
 
     function isCollidedLeftWall(ball){
@@ -22,7 +24,7 @@ function HandleWallBallCollisions(){
     }
 
     function isCollidedFloor(ball){
-        return height - ball.y <= ball.radius
+        return P5.height - ball.y <= ball.radius
     }
 
     function isCollidedRoof(ball){
@@ -34,7 +36,7 @@ function HandleWallBallCollisions(){
 
         if (isCollidedRightWall(ball)){
             // console.log('Right Wall')
-            ball.x = width - ball.radius
+            ball.x = P5.width - ball.radius
             ball.velocity.x = Math.abs(ball.velocity.x) * -1
         }
         else if(isCollidedLeftWall(ball)){
@@ -45,7 +47,7 @@ function HandleWallBallCollisions(){
 
         if(isCollidedFloor(ball)){
             // console.log('Floor')
-            ball.y = height - ball.radius
+            ball.y = P5.height - ball.radius
             ball.velocity.y = -1 * ball.getBounceHeightSpeed(ball.bounceHeight)
         }
         else if(isCollidedRoof(ball)){
@@ -60,7 +62,7 @@ function HandleWallBallCollisions(){
 }
 
 
-function HandleWallBulletCollisions(){
+exports.HandleWallBulletCollisions = function(){
     function isCollidedRoof(bullet) {
         return bullet.final.y <= roof.y
     }
@@ -76,7 +78,7 @@ function HandleWallBulletCollisions(){
 }
 
 
-function HandleBulletBallCollisions()
+exports.HandleBulletBallCollisions = function()
 {
     for (let i=player.blist.length - 1; i>=0; i--){
         // debugger;
@@ -115,16 +117,16 @@ function HandleBulletBallCollisions()
     }
 }
 
-function HandleBallsPlayerCollsions(){
+exports.HandleBallsPlayerCollsions = function(){
     for (let i=0; i<balls.length; i++){
         let ball = balls[i]
 
         // Check collision
         // Consider the circle to be square
-        let playerLeftTop = createVector(player.x - player.w/2, player.y - player.h/2)
-        let playerRightBottom = createVector(player.x + player.w/2, player.y + player.h/2)
-        let ballLeftTop = createVector(ball.x - ball.radius, ball.y - ball.radius)
-        let ballRightBottom = createVector(ball.x + ball.radius, ball.y + ball.radius)
+        let playerLeftTop = P5.createVector(player.x - player.w/2, player.y - player.h/2)
+        let playerRightBottom = P5.createVector(player.x + player.w/2, player.y + player.h/2)
+        let ballLeftTop = P5.createVector(ball.x - ball.radius, ball.y - ball.radius)
+        let ballRightBottom = P5.createVector(ball.x + ball.radius, ball.y + ball.radius)
 
         if(checkRectIntersect(playerLeftTop, playerRightBottom, ballLeftTop, ballRightBottom)){
             throw new GameEnd('Ball Collided with Player')
@@ -145,3 +147,5 @@ function checkRectIntersect(l1, r1, l2, r2){
 
     return true
 }
+
+})(typeof exports === 'undefined' ? this.collisions={}: exports)

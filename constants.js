@@ -1,7 +1,7 @@
 (function(exports){
 
     // Constants
-    exports.ISDEBUG = false
+    exports.ISDEBUG = true
     exports.DEBUG_PORT = 3000
     exports.SERVER = exports.ISDEBUG? `http://localhost:${exports.DEBUG_PORT}`: "https://bubble-trouble-my.herokuapp.com/"
     exports.FRAMES_PER_SEC = 30
@@ -29,11 +29,11 @@
     }
 
     exports.getBallInitialVelocityLeft = function(){
-        return createVector(-10, -30)
+        return P5.createVector(-10, -30)
     }
 
     exports.getBallInitialVelocityRight = function(){
-        return createVector(10, -30)
+        return P5.createVector(10, -30)
     }
 
     exports.getBallBounceHeight = function(ballSize){

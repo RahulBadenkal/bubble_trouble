@@ -7,21 +7,21 @@ class Player {
     #stepDistance = 5
     constructor(x, playerImg){
         this.x = x
-        this.y = height - this.h/2
+        this.y = P5.height - this.h/2
         this.playerImg = playerImg
     }
 
     getBoundingBox(){
         return [
-            createVector(this.x - this.w/2, this.y - this.h/2),
-            createVector(this.x + this.w/2, this.y - this.h/2),
-            createVector(this.x + this.w/2, this.y + this.h/2),
-            createVector(this.x - this.w/2, this.y + this.h/2)
+            P5.createVector(this.x - this.w/2, this.y - this.h/2),
+            P5.createVector(this.x + this.w/2, this.y - this.h/2),
+            P5.createVector(this.x + this.w/2, this.y + this.h/2),
+            P5.createVector(this.x - this.w/2, this.y + this.h/2)
         ]
     }
 
     getCentre(){
-        return createVector(this.x, this.y)
+        return P5.createVector(this.x, this.y)
     }
 
     moveForward(){
@@ -34,7 +34,7 @@ class Player {
 
     draw() {
         // rect(this.x, this.y, this.#w, this.#h)
-        image(this.playerImg, this.x - this.w/2, this.y - this.h/2, this.w, this.h)
+        P5.image(this.playerImg, this.x - this.w/2, this.y - this.h/2, this.w, this.h)
     }
 
     shootBullet() {

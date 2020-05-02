@@ -4,6 +4,7 @@ let P5  // Kept in global scope as it needs to be accessed by game objects scrip
 // Game Objects
 let balls = []
 let player
+let player2
 let roof
 let playerImg
 let bubbleBurstSound
@@ -107,10 +108,13 @@ let app = new Vue({
           roof = new Roof(0, 0)
           // balls.push(new Ball(120, 300, constants.BALL_STD_SIZES.HUGE, constants.getBallInitialVelocityRight(),
           //   constants.getBallBounceHeight(constants.BALL_STD_SIZES.HUGE), constants.colors.RED))
-          // balls.push(new Ball(620, 400, constants.BALL_STD_SIZES.MEDIUM, constants.getBallInitialVelocityLeft(),
-          //   constants.getBallBounceHeight(constants.BALL_STD_SIZES.MEDIUM), constants.colors.BLUE))
+          balls.push(new Ball(620, 400, constants.BALL_STD_SIZES.MEDIUM, constants.getBallInitialVelocityLeft(),
+            constants.getBallBounceHeight(constants.BALL_STD_SIZES.MEDIUM), constants.colors.BLUE))
           player = new Player(500, playerImg)
-          player2 = new Player(500, playerImg)
+          if (data.gameType === 'multi'){
+            player2 = new Player(500, playerImg)
+          }
+          
         }
 
         p.draw = function () {
@@ -126,7 +130,9 @@ let app = new Vue({
             }
             // Player
             player.draw() // Player1 (Self)
-            player2.draw() //Player2
+            if (data.gameType === 'multi'){
+              player2.draw() //Player2
+            }
             // Bullets
             for (let i = 0; i < player.blist.length; i++) {
               let bullet = player.blist[i]
@@ -134,17 +140,32 @@ let app = new Vue({
             }
 
             //Handling for player 2
-            for (let i = 0; i < player2.blist.length; i++) {
-              let bullet = player2.blist[i]
-              bullet.draw()
+            if (data.gameType === 'multi'){
+              for (let i = 0; i < player2.blist.length; i++) {
+                let bullet = player2.blist[i]
+                bullet.draw()
+              }
             }
+           
 
             // Handle Collisions
-            collisions.HandleWallPlayerCollisions()
+            collisions.HandleWallPlayerCollisions(player)
+            if (data.gameType === 'multi'){
+              collisions.HandleWallPlayerCollisions(player2)
+            }
             collisions.HandleWallBallCollisions()
-            collisions.HandleWallBulletCollisions()
-            collisions.HandleBallsPlayerCollsions()
-            collisions.HandleBulletBallCollisions()
+            collisions.HandleWallBulletCollisions(player)
+            if (data.gameType === 'multi'){
+              collisions.HandleWallBulletCollisions(player2)
+            }
+            collisions.HandleBallsPlayerCollsions(player)
+            if (data.gameType === 'multi'){
+              collisions.HandleBallsPlayerCollsions(player2)
+            }
+            collisions.HandleBulletBallCollisions(player)
+            if (data.gameType === 'multi'){
+              collisions.HandleBulletBallCollisions(player2)
+            }
           
             // Handle User inputs
             // Update player positions for next game loop
@@ -179,19 +200,12 @@ let app = new Vue({
               let bullet = player.blist[i]
               bullet.updatePosition()
             }
-
-            //Handling the second player
-            for (let i = 0; i < player2.blist.length; i++) {
-              let bullet = player2.blist[i]
-              bullet.updatePosition()
+            if (data.gameType === 'multi'){
+              for (let i = 0; i < player2.blist.length; i++) {
+                let bullet = player2.blist[i]
+                bullet.updatePosition()
+              }
             }
-
-            // // Share Data with server
-            // if (sharedData.keysPressed.length !== 0) {
-            //   socket.emit('sharedData', sharedData)  // Send Data to Server
-            //   sharedData.keysPressed = []
-            // }
-
 
           } catch (err) {
             if (err instanceof GameEnd) {

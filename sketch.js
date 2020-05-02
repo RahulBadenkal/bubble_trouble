@@ -73,13 +73,13 @@ let app = new Vue({
       for (let i=0; i<data.keysPressed.length; i++){
         let keyPressed = data.keysPressed[i]
         if (keyPressed === constants.KEYS.LEFT_ARROW){
-          player.moveBackward()
+          player2.moveBackward()
         }
         if (keyPressed === constants.KEYS.RIGHT_ARROW){
-          player.moveForward()
+          player2.moveForward()
         }
         if (keyPressed === constants.KEYS.SPACE){
-          player.shootBullet()
+          player2.shootBullet()
         }
       }
     },
@@ -110,6 +110,7 @@ let app = new Vue({
           // balls.push(new Ball(620, 400, constants.BALL_STD_SIZES.MEDIUM, constants.getBallInitialVelocityLeft(),
           //   constants.getBallBounceHeight(constants.BALL_STD_SIZES.MEDIUM), constants.colors.BLUE))
           player = new Player(500, playerImg)
+          player2 = new Player(500, playerImg)
         }
 
         p.draw = function () {
@@ -124,10 +125,17 @@ let app = new Vue({
               balls[i].draw()
             }
             // Player
-            player.draw()
+            player.draw() // Player1 (Self)
+            player2.draw() //Player2
             // Bullets
             for (let i = 0; i < player.blist.length; i++) {
               let bullet = player.blist[i]
+              bullet.draw()
+            }
+
+            //Handling for player 2
+            for (let i = 0; i < player2.blist.length; i++) {
+              let bullet = player2.blist[i]
               bullet.draw()
             }
 
@@ -169,6 +177,12 @@ let app = new Vue({
             // Bullets
             for (let i = 0; i < player.blist.length; i++) {
               let bullet = player.blist[i]
+              bullet.updatePosition()
+            }
+
+            //Handling the second player
+            for (let i = 0; i < player2.blist.length; i++) {
+              let bullet = player2.blist[i]
               bullet.updatePosition()
             }
 

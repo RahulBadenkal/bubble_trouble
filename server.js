@@ -101,6 +101,7 @@ io.sockets.on('connection', function(socket){
     }
     
     function logMsg(x){
+        return
         let ids = '['
         for (let i=0; i<pool.length; i++){
             ids += pool[i].id + ', '
